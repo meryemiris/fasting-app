@@ -1,70 +1,91 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import {
+	StyleSheet,
+	SafeAreaView,
+	Alert,
+	View,
+	ScrollView,
+} from "react-native";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import FastingTracker from "@/components/FastingTracker";
+import FastingPlan from "@/components/FastingPlan";
+import { ThemedText } from "@/components/ThemedText";
+import { useState } from "react";
+import CountDown from "@/components/LoopingTimer";
+
+type Plan = {
+	id: number;
+	name: string;
+	description: string;
+	fastTime: number;
+	eatTime: number;
+};
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
-  );
+	const [selectedPlan, setSelectedPlan] = useState(1);
+	const plans: Plan[] = [
+		{
+			id: 1,
+			name: "16:8",
+			description: "16 hours of fast with 8 hours of eating.",
+			fastTime: 16,
+			eatTime: 8,
+		},
+		{
+			id: 2,
+			name: "17:7",
+			description: "17 hours of fast with 7 hours of eating.",
+			fastTime: 17,
+			eatTime: 7,
+		},
+		{
+			id: 3,
+			name: "18:6",
+			description: "18 hours of fast with 6 hours of eating.",
+			fastTime: 18,
+			eatTime: 6,
+		},
+	];
+
+	const handleSelectPlan = (planId: number) => {
+		setSelectedPlan(planId);
+	};
+	return (
+		<SafeAreaView style={{ flex: 1 }}>
+			<View
+				style={{
+					justifyContent: "center",
+					alignItems: "center",
+					margin: 10,
+				}}
+			>
+				<ScrollView
+					horizontal
+					showsHorizontalScrollIndicator={false}
+					style={styles.planContainer}
+				>
+					{plans.map((plan) => (
+						<FastingPlan
+							key={plan.id}
+							plan={plan}
+							selected={selectedPlan == plan.id}
+							onSelect={handleSelectPlan}
+						/>
+					))}
+				</ScrollView>
+			</View>
+			<FastingTracker
+				fastTime={plans[selectedPlan - 1].fastTime}
+				eatTime={plans[selectedPlan - 1].eatTime}
+			/>
+		</SafeAreaView>
+	);
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
+	planContainer: {
+		flexDirection: "row",
+		// justifyContent: "space-between",
+		paddingHorizontal: 16,
+		paddingVertical: 8,
+	},
 });
