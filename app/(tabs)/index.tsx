@@ -51,6 +51,8 @@ export default function HomeScreen() {
 				}}
 			>
 				<ScrollView
+					decelerationRate="fast"
+					snapToInterval={364}
 					horizontal
 					showsHorizontalScrollIndicator={false}
 					style={styles.planContainer}
@@ -76,7 +78,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
 	planContainer: {
 		flexDirection: "row",
-		paddingHorizontal: 16,
-		paddingVertical: 8,
+		// paddingHorizontal: 16,
+		// paddingVertical: 8,
 	},
 });

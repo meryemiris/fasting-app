@@ -29,9 +29,10 @@ const FastingPlan: React.FC<FastingPlanProps> = ({
 const styles = StyleSheet.create({
 	card: {
 		flexDirection: "column",
-		margin: 10,
+		margin: 12,
 		padding: 20,
 		borderRadius: 10,
+		width: 340,
 	},
 });
 
