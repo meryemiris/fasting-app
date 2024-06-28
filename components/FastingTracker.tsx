@@ -41,6 +41,11 @@ const FastingTracker: React.FC<FastingTrackerProps> = ({
 		loadFastingPeriods();
 	}, []);
 
+	const clearFastingPeriods = async () => {
+		await AsyncStorage.removeItem("fastingPeriods");
+		setFastingPeriods([]);
+	};
+
 	useEffect(() => {
 		let interval: NodeJS.Timeout | null = null;
 
@@ -148,6 +153,7 @@ const FastingTracker: React.FC<FastingTrackerProps> = ({
 					</View>
 				)}
 			/>
+			<Button title="Clear Fasting Periods" onPress={clearFastingPeriods} />
 		</SafeAreaView>
 	);
 };
