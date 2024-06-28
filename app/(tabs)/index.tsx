@@ -1,16 +1,8 @@
-import {
-	StyleSheet,
-	SafeAreaView,
-	Alert,
-	View,
-	ScrollView,
-} from "react-native";
+import { StyleSheet, SafeAreaView, View, ScrollView } from "react-native";
 
 import FastingTracker from "@/components/FastingTracker";
 import FastingPlan from "@/components/FastingPlan";
-import { ThemedText } from "@/components/ThemedText";
 import { useState } from "react";
-import CountDown from "@/components/LoopingTimer";
 
 type Plan = {
 	id: number;
@@ -84,7 +76,6 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
 	planContainer: {
 		flexDirection: "row",
-		// justifyContent: "space-between",
 		paddingHorizontal: 16,
 		paddingVertical: 8,
 	},
